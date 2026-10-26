@@ -1,0 +1,70 @@
+@import "@fontsource-variable/bricolage-grotesque";
+@import "@fontsource-variable/figtree";
+@import "tailwindcss";
+
+@theme {
+  --font-display: "Bricolage Grotesque Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Figtree Variable", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+
+  --color-canvas: #f8f7ff;
+  --color-ink: #1a1740;
+  --color-muted: #6c6990;
+  --color-line: #e6e3f7;
+
+  --color-brand-50: #f1eeff;
+  --color-brand-100: #e3ddff;
+  --color-brand-600: #5b3df5;
+  --color-brand-700: #4528d6;
+
+  --color-sun: #ffc83d;
+  --color-coral: #ff6b57;
+  --color-ok: #12a150;
+  --color-danger: #e5484d;
+
+  --shadow-lift: 0 18px 40px -16px rgb(91 61 245 / 0.35);
+}
+
+@layer base {
+  html { color-scheme: light; scroll-behavior: smooth; }
+  body { @apply bg-canvas font-sans text-ink antialiased; font-size: 16px; }
+  h1, h2, h3, h4 { @apply font-display tracking-tight; }
+  ::selection { background: var(--color-sun); color: var(--color-ink); }
+  :focus-visible { outline: 3px solid var(--color-brand-600); outline-offset: 2px; }
+  /* Les éléments personnalisés sont inline par défaut : on les passe en block pour que les espacements s'appliquent. */
+  app-status-filter, app-error-alert, app-loading, app-empty-state, app-request-timeline, app-service-card { display: block; }
+  app-cover { display: block; height: 100%; width: 100%; }
+}
+
+@layer components {
+  .card { @apply rounded-[22px] border border-line bg-white; }
+
+  .btn { @apply inline-flex items-center justify-center gap-2 rounded-full border border-line bg-white px-5 py-2.5 text-sm font-semibold text-ink transition duration-150 hover:-translate-y-px hover:border-ink/30 disabled:translate-y-0 disabled:cursor-not-allowed disabled:opacity-50; }
+  .btn-primary { @apply border-brand-600 bg-brand-600 text-white hover:border-brand-700 hover:bg-brand-700; }
+  .btn-ink { @apply border-ink bg-ink text-white hover:border-ink hover:bg-ink/90; }
+  .btn-sun { @apply border-sun bg-sun text-ink hover:border-sun hover:brightness-95; }
+  .btn-ok { @apply border-ok bg-ok text-white hover:border-ok hover:brightness-95; }
+  .btn-danger { @apply border-danger/30 text-danger hover:border-danger/60 hover:bg-red-50; }
+  .btn-danger-solid { @apply border-danger bg-danger text-white hover:border-danger hover:brightness-95; }
+  .btn-sm { @apply px-3.5 py-1.5 text-xs; }
+  .btn-lg { @apply px-7 py-3.5 text-base; }
+
+  .input { @apply w-full rounded-xl border border-line bg-white px-3.5 py-2.5 text-[15px] placeholder:text-muted/60 focus:border-brand-600 focus:outline-none focus:ring-4 focus:ring-brand-100; }
+  .input.is-invalid { @apply border-danger focus:border-danger focus:ring-red-100; }
+  .field-label { @apply mb-1.5 block text-sm font-semibold; }
+  .field-error { @apply mt-1.5 text-sm text-danger; }
+
+  .badge { @apply inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold; }
+  .page-title { @apply font-display text-3xl font-extrabold sm:text-4xl; }
+  .page-subtitle { @apply mt-1.5 text-[15px] text-muted; }
+  .link { @apply font-semibold text-brand-600 underline-offset-4 hover:underline; }
+}
+
+/* Entrée unique des cartes empilées de l'accueil */
+@keyframes stack-in {
+  from { opacity: 0; transform: translateY(28px) rotate(0deg) scale(0.96); }
+}
+.stack-in { animation: stack-in 700ms cubic-bezier(0.2, 0.8, 0.2, 1) both; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition: none !important; animation: none !important; scroll-behavior: auto !important; }
+}
